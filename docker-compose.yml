@@ -15,6 +15,9 @@ services:
       - "--accesslog=true"
       - "--providers.file.directory=/config/"
       - "--providers.file.watch=true"
+      - "--entrypoints.web.http.redirections.entryPoint.to=web-secure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./config:/config"
