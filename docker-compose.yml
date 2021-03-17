@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:latest
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web-secure.address=:443"
+      - "--accesslog=true"
+      - "--providers.file.directory=/config/"
+      - "--providers.file.watch=true"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./config:/config"
+  my-app:
+    image: containous/whoami:v1.3.0
+    labels:
+      - "traefik.http.routers.my-app.rule=Host(`wt.local`)"
+      - "traefik.http.routers.my-app.tls=true"
+  my-app2:
+    image: containous/whoami:v1.3.0
+    labels:
+      - "traefik.http.routers.my-app2.rule=Host(`wt-api.local`)"
+      - "traefik.http.routers.my-app2.tls=true"

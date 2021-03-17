@@ -1,0 +1,8 @@
+
+[[tls.certificates]] #first certificate
+   certFile = "/config/wt.cert" 
+   keyFile = "/config/wt.key"
+
+[[tls.certificates]] #first certificate
+   certFile = "/config/wt-api.cert" 
+   keyFile = "/config/wt-api.key"
